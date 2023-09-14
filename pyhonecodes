@@ -1,0 +1,299 @@
+# Pythoncodes
+Functions
+
+def number_squared(number):
+    print(number**2)
+
+number_squared(5)
+
+def number_squared_cust(number,power):
+    print(number**power)
+
+def number_args(*number):
+    print(number[0]*number[1])
+
+args_tuple=(4,5,6,7,8)
+
+def number_args(*number):
+    print(number[0]*number[1])
+
+def number_kwarg(**number):
+    print('My number is: ' + number['integer'] + 'My other number: ' + number['integer2'])
+number_kwarg(integer = '2309', integer2 = '349')
+
+converting data sets
+
+type(tuple(list_type))
+
+num_str_conv=int(num_str)
+
+dict_type={'name':'alex','age':28,'hair':'N/A'}
+type(dict_type)
+
+BMI CALCULATOR
+
+
+name = input(' enter your name')
+
+weight = int(input("enter your weight in pounds:"))
+
+height = int(input("enter your height in inches:"))
+
+BMI = (weight * 703)/(height *height)
+print(BMI)
+
+if BMI>0:
+    if(BMI<18.5):
+        print(name +", you are underwight.")
+    elif (BMI<=24.9):
+        print(name +", you are normal weight.")
+    elif (BMI<29.9):
+        print(name +", you are overweight. You need to exercise more and stop sitting and writing so many python tutorials.")
+    elif (BMI<34.9):
+        print(name +", you are obese.")
+    elif (BMI<39.9):
+        print(name +", you are severely obese.")
+    else:
+        print(name +", you are morbidly obese.")
+else:
+    print("Enter valid input")
+
+
+
+finding all web scrapping
+import os,shutil
+
+from bs4 import BeautifulSoup
+import requests
+
+url = 'https://www.scrapethissite.com/pages/forms/'
+
+page = requests.get(url)
+
+soup = BeautifulSoup(page.text, 'html')
+
+print(soup)
+
+soup.find('div')
+
+soup.find('p', class_ = 'lead').text.strip()
+
+soup.find_all('th')
+
+SCRAPPING DATAFROM WEBSITE
+
+from bs4 import BeautifulSoup
+import requests
+url = 'https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue'
+
+page = requests.get(url)
+
+soup = BeautifulSoup(page.text, 'html')
+
+
+worldtitles=soup.find_all('th')
+
+worldtitles
+
+
+table=soup.find_all('table')[1]
+
+worldtitles= table.find_all('th')
+
+world_table_titles=[title.text.strip() for title in worldtitles]
+print(world_table_titles)
+
+import pandas as pd
+
+df = pd.DataFrame(columns = world_table_titles)
+
+df = pd.DataFrame(columns = world_table_titles)
+
+for row in column_data[1:]:
+    row_data = row.find_all('td')
+    individual_row_data = [data.text.strip() for data in row_data]
+    
+    length = len(df)
+    df.loc[length] = individual_row_data
+
+how to save files into path
+
+df.to_csv(r'C:\Users\hp l\Documents\Companies.csv', index = False)
+
+reading in files
+
+pd.set_option('display.max.rows', 235)
+pd.set_option('display.max.columns', 40)
+
+
+HOW TO FILTER AND ORDER IN PANDAS
+
+df[df['Rank'] <= 10]
+
+
+specific_countries = ['Bangladesh','Brazil']
+
+data1[data1['Country'].isin(specific_countries)]
+
+
+
+data1[data1['Country'].str.contains('United')]
+
+data2 = data1.set_index('Country')
+data2
+
+data2.filter(items = ['Continent','CCA3','Capital'], axis = 1)
+
+data2.filter(like = 'United', axis = 0)
+
+data2[data2['Rank'] < 10].sort_values(by=['Continent','Country'],ascending=[False,True])
+
+data2[data2['Rank'] < 10].sort_values(by=['Rank','Continent'],ascending=False)
+
+
+
+HOW TO CHANGE INDEXES
+
+data1.reset_index(inplace=True) 
+
+data1=pd.read_csv('C:/Users/hp l/Downloads/world_population.csv',index_col = 'Country')
+
+data1.set_index(['Continent','Country'], inplace=True)
+
+data1.sort_index()
+
+pd.set_option('display.max.rows', 235)
+
+
+
+GROUP BY CLAUSE
+group_by_frame = data3.groupby('Base Flavor')
+
+data3.groupby('Base Flavor').count()
+
+data3.groupby('Base Flavor').max()or min() or sum()
+
+data3.groupby('Base Flavor').agg({'Flavor Rating': ['mean','max','count','sum'], 'Texture Rating':['mean','max','count','sum'] })
+
+data3.groupby(['Base Flavor','Liked']).agg({'Flavor Rating': ['mean','max','count','sum']})
+
+data3.groupby('Base Flavor').describe()
+
+
+HOW TO MERGE ON PYTHON
+inner join
+data4.merge(data5, how = 'inner', on = ['FellowshipID', 'FirstName'])
+
+outter join 
+data4.merge(data5, how = 'outer')
+
+data4.merge(data5, how = 'left')
+
+data4.merge(data5, how = 'right')
+ 
+JOINS
+data4.join(data5, on = 'FellowshipID', how = 'outer', lsuffix = '_Left',rsuffix = '_Right')
+df4 = data4.set_index('FellowshipID').join(data5.set_index('FellowshipID'), lsuffix = '_Left',rsuffix = '_Right', how = 'outer')
+df4
+
+
+CONCATENATE
+pd.concat([data4,data5], join = 'outer', axis = 1)
+
+
+
+VISUALIZING DATA 
+
+data6.plot(kind = 'line', title = 'Ice Cream Ratings', xlabel = 'Daily Ratings', ylabel = 'Scores')
+
+data6.plot(kind = 'line', title = 'Ice Cream Ratings', xlabel = 'Daily Ratings', ylabel = 'Scores')
+
+data6.plot.barh(stacked = True)
+
+data6.plot(kind = 'bar')
+
+data6.plot(kind = 'bar',stacked= True)
+
+data6.plot.scatter(x = 'Texture Rating', y = 'Overall Rating', s = 500, c = 'Yellow')
+
+data6.plot.scatter(x = 'Texture Rating', y = 'Overall Rating', s = 500, c = 'Yellow')
+
+data6.plot.hist(bins = 10)
+
+data5.boxplot()
+
+data6.plot.area(figsize = (10,5))
+data6.plot.pie(y='Flavor Rating',figsize=(10,10))
+
+DATA CLEANING IN PYTHON
+
+data7= data7.drop_duplicates()
+data7
+data7["Last_Name"] = df["Last_Name"].str.lstrip("...")
+data7["Last_Name"] = df["Last_Name"].str.lstrip("/")
+data7["Last_Name"] = df["Last_Name"].str.rstrip("_")
+data7["Last_Name"] = df["Last_Name"].str.strip("123._/")
+
+#data7["Phone_Number"] = data7["Phone_Number"].str.replace('[^a-zA-Z0-9]','')
+#data7["Phone_Number"] = data7["Phone_Number"].apply(lambda x: str(x))
+#data7["Phone_Number"] = data7["Phone_Number"].apply(lambda x: str(x))
+data7['Phone_Number'] = data7['Phone_Number'].apply(lambda x: x[0:3] + '-' + x[3:6] + '-' + x[6:10])
+data7['Phone_Number'] = data7['Phone_Number'].str.replace('Na','')
+data7['Phone_Number'] = data7['Phone_Number'].str.replace('nan','')
+
+data7["Address"].str.split(',',2 ,expand=True)
+data7[["Street_Address", "State", "Zip_Code"]] = data7["Address"].str.split(',',2 ,expand=True)
+
+data7['Paying Customer']=data7['Paying Customer'].str.replace('Yes','Y')
+data7['Paying Customer']=data7['Paying Customer'].str.replace('No','N')
+
+data7['Paying Customer']=data7['Paying Customer'].str.replace('Yes','Y')
+data7['Paying Customer']=data7['Paying Customer'].str.replace('No','N')
+
+
+for x in data7.index:
+if data7.loc[x,'Phone_Number'] == '--':
+data7.drop(x, inplace=True)
+        
+for x in data7.index:
+if data7.loc[x, "Do_Not_Contact"] == 'Y':
+data7.drop(x, inplace=True)
+
+
+#Another way to drop null values
+#df = df.dropna(subset="Phone_Number"),
+ inplace=True)
+
+EXPLORATORYDATA ANALYSIS
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+pd.set_option('display.float_format', lambda x: '%.2f' % x)
+
+df.info()
+df.describe()
+df.isnull().sum()
+df.nunique()
+df.corr()
+df.sort_values(by="World Population Percentage", ascending=False).head(10)
+sns.heatmap(df.corr(), annot = True)
+plt.rcParams['figure.figsize'] = (20,7)
+plt.show()
+
+df[df['Continent'].str.contains('Oceania')]
+df.groupby('Continent').mean().sort_values(by="2022 Population",ascending=False)
+
+df2 = df.groupby('Continent')[['1970 Population',
+       '1980 Population', '1990 Population', '2000 Population',
+       '2010 Population', '2015 Population', '2020 Population',
+       '2022 Population']].mean().sort_values(by="2022 Population",ascending=False)
+df2
+
+df.columns
+df3=df2.transpose()
+df3.plot()
+
+df.boxplot(figsize=(20,10))
